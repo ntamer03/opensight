@@ -136,6 +136,43 @@ class Mat:
     def rotate_no_crop(self, angle):
         return Mat(imutils.rotate_bound(self.img, angle))
 
+    def simple_blob_detection(self, params):
+        if params == None:
+            detector = cv2.SimpleBlobDetector()
+        else:
+            detector = cv2.SimpleBlobDetector_create(params)
+        return detector.detect(self.img)
+
+    def create_blob_params(self, filterByArea:bool, filterByCircularity:bool, filterByConvexity:bool,
+                           filterByInertia:bool, maxArea:int, minArea:int, maxCircularity:int, minCircularity:int,
+                           maxConvexity:int, minConvexity:int, maxInertiaRatio:int, minInertiaRatio:int,
+                           maxThreshold:int, minThreshold:int, minDistBetweenBlobs:int):
+
+        params = cv2.SimpleBlobDetector_Params()
+
+        params.minThreshold = minThreshold
+        params.maxThreshold = maxThreshold
+
+        params.filterByArea = filterByArea
+        params.minArea = minArea
+        params.maxArea = maxArea
+
+        params.filterByCircularity = filterByCircularity
+        params.minCircularity = minCircularity
+        params.maxCircularity = maxCircularity
+
+        params.filterByConvexity = filterByConvexity
+        params.minConvexity = minConvexity
+        params.maxConvexity = maxConvexity
+
+        params.filterByInertia = filterByInertia
+        params.minInertiaRatio = minInertiaRatio
+        params.maxInertiaRatio = maxInertiaRatio
+
+        params.minDistBetweenBlobs = minDistBetweenBlobs
+
+        return params
+
 
 class MatBW:
     def __init__(self, img: ndarray):
